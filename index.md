@@ -10,14 +10,14 @@ More recently I have written my own Java based 6502 assembler which supports rel
 ## Contents
 Originally this was all in one HTML file but it grew too big for any of my editors to handle without crashing so I had to cut it up into 8 sections.</p>
 
-- <a href="./architecture.html">Architecture</a> describes the few basic details of the processor.</li>
-- <a href="./registers.html">Registers</a> goes over each of the internal registers and their use.</li>
-- <a href="./instructions.html">Instructions</a> gives a summary of whole instruction set.</li>
-- <a href="#">Addressing</a> describes each of the 6502 memory addressing modes.</li>
-- <a href="#">Algorithms</a> contains examples of basic 6502 coding.</li>
-- <a href="#">Reference</a> describes the complete instruction set in detail.</li>
-- <a href="#">Downloads</a> contains some files useful for 6502 programming.</li>
-- <a href="#">Links</a> contains some links to other sites worth visiting.</li>
+- [Architecture](./architecture.html) describes the few basic details of the processor.</li>
+- [Registers](./registers.html) goes over each of the internal registers and their use.</li>
+- [Instructions](./instructions.html) gives a summary of whole instruction set.</li>
+- [Addressing](#) describes each of the 6502 memory addressing modes.</li>
+- [Algorithms](#) contains examples of basic 6502 coding.</li>
+- [Reference](#) describes the complete instruction set in detail.</li>
+- [Downloads](#) contains some files useful for 6502 programming.</li>
+- [Links](#) contains some links to other sites worth visiting.</li>
 
 Click on any of the above links or the links at the bottom of each page to move between the sections.
 

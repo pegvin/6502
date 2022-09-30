@@ -80,6 +80,391 @@ _LOOP   LDA SRC,X
         DEX
         BPL _LOOP</code></pre>
 
+	<p>Another basic operation is setting a 16 bit word to an initial constant value. The easiest way to do this is to load the low and high portions into A one at a time and store them.</p>
+	<pre><code class="language-armasm">; Setting a 16 bit constant
+_SET16I LDA #LO NUM     ;Set the least significant byte of the constant
+        STA MEM+0
+        LDA #HI NUM     ;... then the most significant byte
+        STA MEM+1</code></pre>
+
+	<h2>Logical Operations</h2>
+	<p>The simplest forms of operation on binary values are the logical AND, logical OR and exclusive OR illustrated by the following truth tables.</p>
+	<table width="100%" border="0"><tbody>
+		<tr>
+			<td width="20%"><b><i>Logical AND (AND)</i></b></td>
+			<td width="10%"></td>
+			<td width="20%"><b><i>Logical OR (ORA)</i></b></td>
+			<td width="10%"></td>
+			<td width="20%"><b><i>Exclusive OR (EOR)</i></b></td>
+		</tr>
+		<tr>
+			<td width="20%">
+				<table width="100%" border="0"><tbody>
+					<tr>
+						<td width="33%"></td>
+						<td width="33%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="34%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+					</tr>
+					<tr>
+						<td width="33%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="33%" bgcolor="#c0c0c0">0</td>
+						<td width="34%" bgcolor="#c0c0c0">0</td>
+					</tr>
+					<tr>
+						<td width="33%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="33%" bgcolor="#c0c0c0">0</td>
+						<td width="34%" bgcolor="#c0c0c0">1</td>
+					</tr>
+				</tbody></table>
+			</td>
+			<td width="10%"></td>
+			<td width="20%">
+				<table width="100%" border="0"><tbody>
+					<tr>
+						<td width="33%"></td>
+						<td width="33%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="34%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+					</tr>
+					<tr>
+						<td width="33%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="33%" bgcolor="#c0c0c0">0</td>
+						<td width="34%" bgcolor="#c0c0c0">1</td>
+					</tr>
+					<tr>
+						<td width="33%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="33%" bgcolor="#c0c0c0">1</td>
+						<td width="34%" bgcolor="#c0c0c0">1</td>
+					</tr>
+				</tbody></table>
+			</td>
+			<td width="10%"></td>
+			<td width="20%">
+				<table width="100%" border="0"><tbody>
+					<tr>
+						<td width="33%"></td>
+						<td width="33%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="34%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+					</tr>
+					<tr>
+						<td width="33%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="33%" bgcolor="#c0c0c0">0</td>
+						<td width="34%" bgcolor="#c0c0c0">1</td>
+					</tr>
+					<tr>
+						<td width="33%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="33%" bgcolor="#c0c0c0">1</td>
+						<td width="34%" bgcolor="#c0c0c0">0</td>
+					</tr>
+				</tbody></table>
+			</td>
+		</tr>
+	</tbody></table>
+
+	<p>These results can be summarized in English as:</p>
+	<ul>
+		<li>The result of a logical AND is true (1) if and only if both inputs are true, otherwise it is false (0).</li>
+		<li>The result of a logical OR is true (1) if either of the inputs its true, otherwise it is false (0).</li>
+		<li>The result of an exclusive OR is true (1) if and only if one input is true and the other is false, otherwise it is false (0).</li>
+	</ul>
+	<p>The tables show result of applying these operations on two one-bit values but as the 6502 comprises of eight bit registers and memory each instruction will operate on two eight bit values simultaneously as shown below.</p>
+
+	<p><table width="500" border="0"><tbody>
+		<tr>
+			<td width="16%"></td>
+			<td width="17%"><b><i>Logical AND (AND)</i></b></td>
+		</tr>
+		<tr>
+			<td width="16%"><b><i>Value 1</i></b></td>
+			<td width="17%">
+				<table width="100%" border="0"><tbody>
+					<tr>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+					</tr>
+				</tbody></table>
+			</td>
+		</tr>
+		<tr>
+			<td width="16%"><b><i>Value 2</i></b></td>
+			<td width="17%">
+				<table width="100%" border="0"><tbody>
+					<tr>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+					</tr>
+				</tbody></table>
+			</td>
+		</tr>
+		<tr>
+			<td width="16%"><b><i>Result</i></b></td>
+			<td width="17%">
+				<table width="100%" border="0"><tbody>
+					<tr>
+						<td width="12%" bgcolor="#c0c0c0">0</td>
+						<td width="12%" bgcolor="#c0c0c0">0</td>
+						<td width="12%" bgcolor="#c0c0c0">0</td>
+						<td width="12%" bgcolor="#c0c0c0">1</td>
+						<td width="13%" bgcolor="#c0c0c0">0</td>
+						<td width="13%" bgcolor="#c0c0c0">0</td>
+						<td width="13%" bgcolor="#c0c0c0">0</td>
+						<td width="13%" bgcolor="#c0c0c0">1</td>
+					</tr>
+				</tbody></table>
+			</td>
+		</tr>
+	</tbody></table></p>
+
+	<p><table width="500" border="0"><tbody>
+		<tr>
+			<td width="5%"></td><td width="17%"><b><i>Logical OR (ORA)</i></b></td>
+		</tr>
+		<tr>
+			<td width="16%"><b><i>Value 1</i></b></td>
+			<td width="17%">
+				<table width="100%" border="0"><tbody>
+					<tr>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+					</tr>
+				</tbody></table>
+			</td>
+		</tr>
+		<tr>
+			<td width="16%"><b><i>Value 2</i></b></td>
+			<td width="17%">
+				<table width="100%" border="0"><tbody>
+					<tr>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+					</tr>
+				</tbody></table>
+			</td>
+		</tr>
+		<tr>
+			<td width="16%"><b><i>Result</i></b></td>
+			<td width="17%">
+				<table width="100%" border="0"><tbody>
+					<tr>
+						<td width="12%" bgcolor="#c0c0c0">0</td>
+						<td width="12%" bgcolor="#c0c0c0">1</td>
+						<td width="12%" bgcolor="#c0c0c0">1</td>
+						<td width="12%" bgcolor="#c0c0c0">1</td>
+						<td width="13%" bgcolor="#c0c0c0">0</td>
+						<td width="13%" bgcolor="#c0c0c0">1</td>
+						<td width="13%" bgcolor="#c0c0c0">1</td>
+						<td width="13%" bgcolor="#c0c0c0">1</td>
+					</tr>
+				</tbody></table>
+			</td>
+		</tr>
+	</tbody></table></p>
+
+	<p><table width="500" border="0"><tbody>
+		<tr>
+			<td width="16%"></td>
+			<td width="17%"><b><i>Exclusive OR (EOR)</i></b></td>
+		</tr>
+		<tr>
+			<td width="16%"><b><i>Value 1</i></b></td>
+			<td width="17%">
+				<table width="100%" border="0"><tbody>
+					<tr>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+					</tr>
+				</tbody></table>
+			</td>
+		</tr>
+		<tr>
+			<td width="16%"><b><i>Value 2</i></b></td>
+			<td width="17%">
+				<table width="100%" border="0"><tbody>
+					<tr>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="12%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">0</font></td>
+						<td width="13%" bgcolor="#000000"><font color="#ffffff">1</font></td>
+					</tr>
+				</tbody></table>
+			</td>
+		</tr>
+		<tr>
+		<td width="16%"><b><i>Result</i></b></td>
+		<td width="17%">
+				<table width="100%" border="0"><tbody>
+					<tr>
+						<td width="12%" bgcolor="#c0c0c0">0</td>
+						<td width="12%" bgcolor="#c0c0c0">1</td>
+						<td width="12%" bgcolor="#c0c0c0">1</td>
+						<td width="12%" bgcolor="#c0c0c0">0</td>
+						<td width="13%" bgcolor="#c0c0c0">0</td>
+						<td width="13%" bgcolor="#c0c0c0">1</td>
+						<td width="13%" bgcolor="#c0c0c0">1</td>
+						<td width="13%" bgcolor="#c0c0c0">0</td>
+					</tr>
+				</tbody></table>
+			</td></tr>
+	</tbody></table></p>
+
+	<p>It is important to understand the properties and practical applications of each of these operations as they are extensively used in other algorithms.</p>
+	<ul>
+		<li>Logical AND operates as a filter and is often used to select a subset of bits from a value (e.g. the status flags from a peripheral control chip).</li>
+		<li>Logical OR allows bits to be inserted into an existing value (e.g. to set control flags in a peripheral control chip).</li>
+		<li>Exclusive OR allows selected bits to be set or inverted.</li>
+	</ul>
+	<p>In the 6502 these operations are implemented by the AND, ORA and EOR instructions. One of the values to be operated on will be the current contents of the accumulator, the other is in memory either as an immediate value or at a specified location. The result of the operation is placed in the accumulator and the zero and negative flags are set accordingly.</p>
+	<pre><code class="language-armasm">; Example logical operations
+  AND #$0F        ;Filter out all but the least 4 bits
+  ORA BITS,X      ;Insert some bits from a table
+  EOR (DATA),Y    ;EOR against some data</code></pre>
+	<p>A very common use of the EOR instruction is to calculate the 'complement' (or logical NOT) of a value. This involves inverting every bit in the value and is most easily calculated by exclusively ORing against an all ones value.</p>
+	<pre><code class="language-armasm">; Calculate the complement
+  EOR #$FF</code></pre>
+	<p>The macro library contains reference code for 16 and 32 bit AND, ORA, EOR and NOT operations although there is very little use for them outside of interpreters.</p>
+
+	<h2>Shifts & Rotates</h2>
+	<p>The shift and rotate instructions allow the bits within either the accumulator or a memory location to be moved by one place either up (left) or down (right). When the bits are moved a new value will be needed to fill the vacant position created at one end of the value, and similarly the bit displaced at the opposite end will need to be caught and stored.</p>
+	<p>Both shifts and rotates catch the displaced bit in the carry flag but they differ in how they fill the vacant position; shifts will always fill the vacant bit with a zero whilst a rotate will fill it with the value of the carry flag as it was at the start of the instruction.</p>
+	<p>For example the following diagram shows the result of applying an 'Arithmetic Shift Left' (ASL) to the value $4D to give $9A.</p>
+	<pre><code class="language-plain">               +---+---+---+---+---+---+---+---+
+Initial:       | 0 | 1 | 0 | 0 | 1 | 1 | 0 | 1 |
+               +---+---+---+---+---+---+---+---+
+                 |   |   |   |   |   |   |   |
+                /   /   /   /   /   /   /   /
+               /   /   /   /   /   /   /   /    0
+              /   /   /   /   /   /   /   /   /
+             /   |   |   |   |   |   |   |   |
+            /    v   v   v   v   v   v   v   v
+               +---+---+---+---+---+---+---+---+
+Result:   C=0  | 1 | 0 | 0 | 1 | 1 | 0 | 1 | 0 |
+               +---+---+---+---+---+---+---+---+</code></pre>
+
+	<p>Whist the following shows the result of applying a 'Rotate Left' (ROL) to the same value, but assuming that the carry contained the value one.</p>
+	<pre><code class="language-plain">               +---+---+---+---+---+---+---+---+
+Initial:       | 0 | 1 | 0 | 0 | 1 | 1 | 0 | 1 | C=1
+               +---+---+---+---+---+---+---+---+
+                 |   |   |   |   |   |   |   |   /
+                /   /   /   /   /   /   /   /   /
+               /   /   /   /   /   /   /   /   /
+              /   /   /   /   /   /   /   /   /
+             /   |   |   |   |   |   |   |   |
+            /    v   v   v   v   v   v   v   v
+               +---+---+---+---+---+---+---+---+
+Result:   C=0  | 1 | 0 | 0 | 1 | 1 | 0 | 1 | 1 |
+               +---+---+---+---+---+---+---+---+</code></pre>
+
+	<p>Shifting the bits within a value (and introducing a zero as the least significant bit) has the effect of multiplying its value by two. In order to apply this multiplication to a value larger than a single byte we use ASL to shift the first byte and then ROL all the subsequent bytes as necessary using the carry flag to temporarily hold the displaced bits as they are moved from one byte to the next.</p>
+	<pre><code class="language-armasm">; Shift a 16bit value by one place left (e.g. multiply by two)
+_ASL16  ASL MEM+0       ;Shift the LSB
+        ROL MEM+1       ;Rotate the MSB</code></pre>
+
+	<p>The behavior of the right shift as rotates follows the same pattern. For example we can apply a 'Logical Shift Right' (LSR ) to the value $4D to give $26.</p>
+	<pre><code class="language-plain">               +---+---+---+---+---+---+---+---+
+Initial:       | 0 | 1 | 0 | 0 | 1 | 1 | 0 | 1 |
+               +---+---+---+---+---+---+---+---+
+                 |   |   |   |   |   |   |   |
+                  \   \   \   \   \   \   \   \
+              0    \   \   \   \   \   \   \   \
+                \   \   \   \   \   \   \   \   \
+                 |   |   |   |   |   |   |   |   \
+                 v   v   v   v   v   v   v   v    \
+               +---+---+---+---+---+---+---+---+
+Result:        | 0 | 0 | 1 | 0 | 0 | 1 | 1 | 0 |  C=1
+               +---+---+---+---+---+---+---+---+</code></pre>
+
+	<p>Or a 'Rotate Right' (ROR) of the same value, but assuming that the carry contained the value one to give $A6.</p>
+	<pre><code class="language-plain">               +---+---+---+---+---+---+---+---+
+Initial:   C=1 | 0 | 1 | 0 | 0 | 1 | 1 | 0 | 1 |
+               +---+---+---+---+---+---+---+---+
+             \   |   |   |   |   |   |   |   |
+              \   \   \   \   \   \   \   \   \
+               \   \   \   \   \   \   \   \   \
+                \   \   \   \   \   \   \   \   \
+                 |   |   |   |   |   |   |   |   \
+                 v   v   v   v   v   v   v   v    \
+               +---+---+---+---+---+---+---+---+
+Result:        | 1 | 0 | 1 | 0 | 0 | 1 | 1 | 0 |  C=1
+               +---+---+---+---+---+---+---+---+</code></pre>
+
+	<p>Not surprisingly if left shifts multiply a value by two then right shifts do an unsigned division by two. Again if we are applying the division to a multi-byte value we will typically use LSR on the first byte (the MSB this time) and ROR on all subsequent bytes.</p>
+	<pre><code class="language-armasm">; Shift a 16 bit value by one place right (e.g. divide by two)
+_LSR16  LSR MEM+1       ;Shift the MSB
+        ROR MEM+0       ;Rotate the LSB</code></pre>
+
+	<p>There are a number of applications for shifts and rotates, not least the coding of generic multiply and divide algorithms which are discussed later.</p>
+	<p>As was pointed out earlier right shifting a value two divide it by two only works on unsigned values. This is because the LSR is will always place a zero in the most significant bit of the MSB. To make this algorithm work for all two complement coded values we need to ensure that value of this bit is copied back into itself to keep the value the same sign. We can use another shift to achieve this.</p>
+	<pre><code class="language-armasm">; Divide a signed 16 bit value by two
+_DIV2   LDA MEM+1       ;Load the MSB
+        ASL A           ;Copy the sign bit into C
+        ROR MEM+1       ;And back into the MSB
+        ROR MEM+0       ;Rotate the LSB as normal</code></pre>
+
+	<h2>Addition & Subtraction</h2>
+	<p>The 6502 processor provides 8 bit addition and subtraction instructions and a carry/borrow flag that is used to propagate the carry bit between operations.</p>
+	<p>To implement a 16 bit addition the programmer must code two pairs of additions; one for the least significant bytes and one for the most significant bytes. The carry flag must be cleared before the first addition to ensure that an additional increment isn't performed.</p>
+	<pre><code class="language-armasm">; 16 bit Binary Addition
+        CLC             ;Ensure carry is clear
+        LDA VLA+0       ;Add the two least significant bytes
+        ADC VLB+0
+        STA RES+0       ;... and store the result
+        LDA VLA+1       ;Add the two most significant bytes
+        ADC VLB+1       ;... and any propagated carry bit
+        STA RES+1       ;... and store the result</code></pre>
+
+	<p>Subtraction follows the same pattern but the carry must be set before the first pair of bytes are subtracted to get the correct result.</p>
+	<pre><code class="language-armasm">; 16 bit Binary Subtraction
+        SEC             ;Ensure carry is set
+        LDA VLA+0       ;Subtract the two least significant bytes
+        SBC VLB+0
+        STA RES+0       ;... and store the result
+        LDA VLA+1       ;Subtract the two most significant bytes
+        SBC VLB+1       ;... and any propagated borrow bit
+        STA RES+1       ;... and store the result</code></pre>
+
+	<p>Both the addition and subtraction algorithm can be extended to 32 bits by repeating the LDA/ADC/STA or LDA/SBC/STA pattern for two further bytes worth of data.</p>
+
+	<h2>Negation</h2>
+	<p>The traditional approach to negating a twos complement number is to reverse all the bits (by EORing with $FF) and add one as shown below.</p>
+	<pre><code class="language-armasm">; 8 bit Binary Negation
+        CLC 		;Ensure carry is clear
+	EOR #$FF	;Invert all the bits
+	ADC #1		;... and add one</code></pre>
+
+	<p></p>
 	<pre><code class="language-armasm"></code></pre>
 	<pre><code class="language-armasm"></code></pre>
 	<pre><code class="language-armasm"></code></pre>
