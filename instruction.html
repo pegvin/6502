@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>6502 Instructions</title>
+	<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<div class="MainContent">
+	<hr>
+	<h1>The Instruction Set</h1>
+	<p>The 6502 has a relatively basic set of instructions, many having similar functions (e.g. memory access, arithmetic, etc.). The following sections list the complete set of 56 instructions in functional groups.</p>
+
+	<h2>Load/Store Operations</h2>
+	<p>These instructions transfer a single byte between memory and one of the registers. Load operations set the negative (N) and zero (Z) flags depending on the value of transferred. Store operations do not affect the flag settings.</p>
+
+	<p><table width="450" cellspacing="0" cellpadding="0" border="1"><tbody>
+		<tr class="allCenter">
+			<td><a href="./reference.html#LDA">LDA</a></td>
+			<td>Load Accumulator</td>
+			<td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#LDX">LDX</a></td>
+			<td>Load X Register</td>
+			<td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#LDY">LDY</a></td>
+			<td>Load Y Register</td>
+			<td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#STA">STA</a></td>
+			<td>Store Accumulator</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#STX">STX</a></td>
+			<td>Store X Register</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#STY">STY</a></td>
+			<td>Store Y Register</td>
+			<td>&nbsp;</td>
+		</tr>
+	</tbody></table></p>
+
+	<h2>Register Transfers</h2>
+	<p>The contents of the X and Y registers can be moved to or from the accumulator, setting the negative (N) and zero (Z) flags as appropriate.</p>
+	<p><table width="450" cellspacing="0" cellpadding="0" border="1"><tbody>
+		<tr>
+			<td><a href="./reference.html#TAX">TAX</a></td>
+			<td>Transfer accumulator to X</td>
+			<td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#TAY">TAY</a></td>
+			<td>Transfer accumulator to Y</td>
+			<td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#TXA">TXA</a></td>
+			<td>Transfer X to accumulator</td>
+			<td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#TYA">TYA</a></td>
+			<td>Transfer Y to accumulator</td>
+			<td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+	</tbody></table></p>
+
+	<h2>Stack Operations</h2>
+	<p>The 6502 microprocessor supports a 256 byte stack fixed between memory locations $0100 and $01FF. A special 8-bit register, S, is used to keep track of the next free byte of stack space. Pushing a byte on to the stack causes the value to be stored at the current free location (e.g. $0100,S) and then the stack pointer is post decremented. Pull operations reverse this procedure.</p>
+	<p>The stack register can only be accessed by transferring its value to or from the X register. Its value is automatically modified by push/pull instructions, subroutine calls and returns, interrupts and returns from interrupts.</p>
+	<p><table width="450" cellspacing="0" cellpadding="0" border="1"><tbody>
+		<tr>
+			<td><a href="./reference.html#TSX">TSX</a></td>
+			<td>Transfer stack pointer to X</td>
+			<td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#TXS">TXS</a></td>
+			<td>Transfer X to stack pointer</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#PHA">PHA</a></td>
+			<td>Push accumulator on stack</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#PHP">PHP</a></td>
+			<td>Push processor status on stack</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#PLA">PLA</a></td>
+			<td>Pull accumulator from stack</td>
+			<td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#PLP">PLP</a></td>
+			<td>Pull processor status from stack</td>
+			<td>All</td>
+		</tr>
+	</tbody></table></p>
+
+	<h2>Logical</h2>
+	<p>The following instructions perform logical operations on the contents of the accumulator and another value held in memory. The BIT instruction performs a logical AND to test the presence of bits in the memory value to set the flags but does not keep the result.</p>
+	<p><table width="450" cellspacing="0" cellpadding="0" border="1"><tbody>
+		<tr>
+			<td><a href="./reference.html#AND">AND</a></td>
+			<td>Logical AND</td>
+			<td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#EOR">EOR</a></td>
+			<td>Exclusive OR</td>
+			<td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#ORA">ORA</a></td>
+			<td>Logical Inclusive OR</td>
+			<td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+		<tr>
+			<td><a href="./reference.html#BIT">BIT</a></td>
+			<td>Bit Test</td>
+			<td><a href="./registers.html#N">N</a>, <a href="./registers.html#V">V</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+	</tbody></table></p>
+
+	<h2>Arithmetic</h2>
+	<p>The arithmetic operations perform addition and subtraction on the contents of the accumulator. The compare operations allow the comparison of the accumulator and X or Y with memory values.</p>
+	<p><table width="450" cellspacing="0" cellpadding="0" border="1"><tbody>
+		<tr>
+		    <td><a href="./reference.html#ADC">ADC</a></td>
+		    <td>Add with Carry</td>
+		    <td><a href="./registers.html#N">N</a>, <a href="./registers.html#V">V</a>, <a href="./registers.html#Z">Z</a>, <a href="./registers.html#C">C</a></td>
+		</tr>
+		<tr>
+		    <td><a href="./reference.html#SBC">SBC</a></td>
+		    <td>Subtract with Carry</td>
+		    <td><a href="./registers.html#N">N</a>, <a href="./registers.html#V">V</a>, <a href="./registers.html#Z">Z</a>, <a href="./registers.html#C">C</a></td>
+		</tr>
+		<tr>
+		    <td><a href="./reference.html#CMP">CMP</a></td>
+		    <td>Compare accumulator</td>
+		    <td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a>, <a href="./registers.html#C">C</a></td>
+		</tr>
+		<tr>
+		    <td><a href="./reference.html#CPX">CPX</a></td>
+		    <td>Compare X register</td>
+		    <td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a>, <a href="./registers.html#C">C</a></td>
+		</tr>
+		<tr>
+		    <td><a href="./reference.html#CPY">CPY</a></td>
+		    <td>Compare Y register</td>
+		    <td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a>, <a href="./registers.html#C">C</a></td>
+		</tr>
+	</tbody></table></p>
+
+	<h2>Increments & Decrements</h2>
+	<p>Increment or decrement a memory location or one of the X or Y registers by one setting the negative (N) and zero (Z) flags as appropriate.</p>
+	<p><table width="450" cellspacing="0" cellpadding="0" border="1"><tbody>
+		<tr>
+		    <td><a href="./reference.html#INC">INC</a></td>
+		    <td>Increment a memory location</td>
+		    <td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+		<tr>
+		    <td><a href="./reference.html#INX">INX</a></td>
+		    <td>Increment the X register</td>
+		    <td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+		<tr>
+		    <td><a href="./reference.html#INY">INY</a></td>
+		    <td>Increment the Y register</td>
+		    <td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+		<tr>
+		    <td><a href="./reference.html#DEC">DEC</a></td>
+		    <td>Decrement a memory location</td>
+		    <td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+		<tr>
+		    <td><a href="./reference.html#DEX">DEX</a></td>
+		    <td>Decrement the X register</td>
+		    <td><a href="#N">N</a>, <a href="#Z">Z</a></td>
+		</tr>
+		<tr>
+		    <td><a href="./reference.html#DEY">DEY</a></td>
+		    <td>Decrement the Y register</td>
+		    <td><a href="./registers.html#N">N</a>, <a href="./registers.html#Z">Z</a></td>
+		</tr>
+	</tbody></table></p>
+
+	<footer>
+		<a href="./registers.html">Back</a>
+		<a href="/6502/">Home</a>
+		<a href="./introduction.html">Contents</a>
+		<a href="./registers.html">Next</a>
+	</footer>
+	<hr>
+</div>
+
+</body>
+</html>

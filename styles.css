@@ -69,3 +69,5 @@ footer a {
 
 a { color: #358bfc; text-decoration: none; }
 a:hover { text-decoration: underline; }
+
+td { text-align: center; }
