@@ -1,5 +1,3 @@
----
-
 # Introduction
 My first computer, a BBC Microcomputer Model B, was powered by a 6502 processor and I spent many hours writing and debugging assembly language programs for it (I was the author of CodeKit, co-author of SupaStore and lots of other stuff). I managed to hold on to my BBC until 1989 when my wife insisted that I got rid of it before I bought my first Intel based PC.
 
