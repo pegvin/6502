@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=BioRhyme:wght@300;400;700&family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=BioRhyme:wght@300;400;700&family=Inconsolata:wght@400;700&family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 /* Normalize CSS - Start */
 * { box-sizing: border-box; }
@@ -64,11 +64,17 @@ footer a {
 	font-family: 'BioRhyme', serif;
 }
 
-.sans-serif, * {
+.sans-serif, *:not(.mono, pre, code, pre code, pre code *) {
 	font-family: 'Poppins', sans-serif;
+}
+
+.mono, pre, code, pre code {
+	font-family: 'Inconsolata', monospace !important;
+	font-size: 1.05em;
 }
 
 a { color: #358bfc; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-td { text-align: center; }
+td { text-align: center; min-width: 50px; }
+

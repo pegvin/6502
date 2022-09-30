@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>6502 Addressing Modes</title>
+	<link rel="stylesheet" href="./styles.css">
+
+	<!-- Simple Easy To use Libraries Which Handle Syntax Higlighting & Loading The Required Grammars For Us -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-atom-dark.min.css" integrity="sha512-GZPS1oCebjx8g/ZkrTTvWirW+4wDkzIsilUQPXcZzuDpDzoH5brM2AojiFjo6ObIWeM68ZDostvdjaS9MNYCTg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/diff-highlight/prism-diff-highlight.min.css" integrity="sha512-rErSjI34XKsATVf+BW6GnuWVmj7imdMR7AIyb4ydHhiMFewUiJOeN9bYO35iCgdG+3Bxkl0GkAs0E8hrDYooLA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha512-SkmBfuA2hqjzEVpmnMt/LINrjop3GKWqsuLSSB3e7iBmYK7JuWw4ldmmxwD9mdm2IRTTi0OxSAfEGvgEi0i2Kw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+
+<div class="MainContent">
+	<hr>
+
+	<h1>Coding Algorithms</h1>
+	<p>As you can see from the preceding descriptions the instruction set of the 6502 is quite basic, having only simple 8 bit operations. Complex operations such as 16 or 32 bit arithmetic and memory transfers have to be performed by executing a sequence of simpler operations. This sections describes how to build these algorithms and is based on code taken from my macro library (available from the download section).</p>
+	<p>If you find any bugs in the code, have routines to donate to the library, or can suggest improvements then please mail me.</p>
+
+	<h2>Standard Conventions</h2>
+	<p>The 6502 processor expects addresses to be stored in 'little endian' order, with the least significant byte first and the most significant byte second. If the value stored was just a number (e.g. game score, etc.) then we could write code to store and manipulate it in 'big endian' order if we wished, however the algorithms presented here always use 'little endian' order so that they may be applied either to simple numeric values or addresses without modification.</p>
+	<blockquote>
+		<svg viewBox="0 0 512 512" width="20" title="quote-left"><path d="M464 256h-80v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8c-88.4 0-160 71.6-160 160v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48zm-288 0H96v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8C71.6 32 0 103.6 0 192v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48z" /></svg>
+		<p>The terms 'big endian' and 'little endian' come from Gulliver's Travels. The people of Lilliput and Blefuscu have been fighting a war over which end of an boiled egg one should crack to eat it. In computer terms it refers to whether the most or least significant  portion of a binary number is stored in the lower memory address.</p>
+		<hr>
+	</blockquote>
+	<p>To be safe the algorithms usually start by setting processor flags and registers to safe initial values. If you need to squeeze a few extra bytes or cycles out of the routine you might be able to remove some of these initializations depending on the preceding instructions.</p>
+
+	<h2>Simple Memory Operations</h2>
+	<p>Probably the most fundamental memory operation is clearing an area of memory to an initial value, such as zero. As the 6502 cannot directly move values to memory clearing even a small region of memory requires the use of a register. Any of A, X or Y could be used to hold the initial value, but in practice A is normally used because it can be quickly saved and restored (with PHA and PLA) leaving X and Y free for application use.</p>
+
+	<pre><code class="language-armasm">; Clearing 16 bits of memory
+_CLR16 LDA #0          ;Load constant zero into A
+       STA MEM+0       ;Then clear the least significant byte
+       STA MEM+1       ;... followed by the most significant
+
+; Clearing 32 bits of memory
+_CLR32 LDA #0          ;Load constant zero into A
+       STA MEM+0       ;Clear from the least significant byte
+       STA MEM+1       ;... up
+       STA MEM+2       ;... to
+       STA MEM+3       ;... the most significant</code></pre>
+
+	<p>Moving a small quantity of data requires a register to act as a temporary container during the transfer. Again any of A, X, or Y may be used, but as before using A as the temporary register is often the most practical.</p>
+
+	<pre><code class="language-armasm">; Moving 16 bits of memory
+_XFR16 LDA SRC+0       ;Move the least significant byte
+       STA DST+0
+       LDA SRC+1       ;Then the most significant
+       STA DST+1
+
+; Moving 32 bits of memory
+_XFR32 LDA SRC+0       ;Move from least significant byte
+       STA DST+0
+       LDA SRC+1       ;... up
+       STA DST+1
+       LDA SRC+2       ;... to
+       STA DST+2
+       LDA SRC+3       ;... the most significant
+       STA DST+3</code></pre>
+
+	<p>Provided the source and destination areas do not overlap then the order in which the bytes are moved is irrelevant, but it usually pays to be consistent in your approach to make mistakes easier to spot.</p>
+	<p>All of the preceding examples can be extended to apply to larger memory areas but will generate increasingly larger code as the number of bytes involved grows. Algorithms that iterate using a counter and use index addressing to access memory will result in smaller code but will be slightly slower to execute.</p>
+	<p>This trade off between speed and size is a common issue in assembly language programming and there are times when one approach is clearly better than the other (e.g. when trying to squeeze code into a fixed size ROM - SIZE, or manipulate data during a video blanking period - SPEED).</p>
+	<pre><code class="language-armasm">; Clear 32 bits of memory iteratively
+_CLR32C LDX #3
+        LDA #0
+_LOOP   STA MEM,X
+        DEX
+        BPL _LOOP
+
+; Move 32 bits of memory iteratively
+_XFR32C LDX #3
+_LOOP   LDA SRC,X
+        STA DST,X
+        DEX
+        BPL _LOOP</code></pre>
+
+	<pre><code class="language-armasm"></code></pre>
+	<pre><code class="language-armasm"></code></pre>
+	<pre><code class="language-armasm"></code></pre>
+	<pre><code class="language-armasm"></code></pre>
+	<pre><code class="language-armasm"></code></pre>
+	<pre><code class="language-armasm"></code></pre>
+
+	<footer>
+		<a href="./instructions.html">Back</a>
+		<a href="/6502/">Home</a>
+		<a href="./introduction.html">Contents</a>
+		<a href="./algorithms.html">Next</a>
+	</footer>
+	<hr>
+</div>
+
+</body>
+</html>
