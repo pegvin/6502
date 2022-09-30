@@ -23,5 +23,7 @@ Click on any of the above links or the links at the bottom of each page to move 
 
 ---
 
-<a href="/6502/">Home</a>
-<a href="./architecture.html">Next</a>
+<footer style="display: table; width: 100%; table-layout: fixed;">
+	<a style="display: table-cell; text-align: center;" href="/6502/">Home</a>
+	<a style="display: table-cell; text-align: center;" href="./architecture.html">Next</a>
+</footer>
