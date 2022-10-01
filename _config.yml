@@ -1,3 +1,4 @@
+faviconPath: ./favicon.png
 remote_theme: pegvin/slate
 plugins:
 - jekyll-remote-theme
