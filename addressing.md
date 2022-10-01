@@ -8,7 +8,7 @@ nav2:
   url: ./index.html
   title: Contents
 
-nav2:
+nav3:
   url: ./algorithms.html
   title: Next (Coding Algorithms)
 ---

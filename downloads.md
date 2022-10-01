@@ -8,7 +8,7 @@ nav2:
   url: ./index.html
   title: Contents
 
-nav2:
+nav3:
   url: ./links.html
   title: Next (Links)
 ---

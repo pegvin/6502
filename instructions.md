@@ -1,5 +1,5 @@
 ---
-title: Instructions
+title: The Instruction Set
 nav1:
   url: ./registers.html
   title: Back (Registers)
@@ -8,7 +8,7 @@ nav2:
   url: ./index.html
   title: Contents
 
-nav2:
+nav3:
   url: ./addressing.html
   title: Next (Addressing Modes)
 ---
