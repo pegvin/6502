@@ -53,5 +53,3 @@ Instructions exist to test the values of the various bits, to set or clear some 
 - **Break Command**: The break command bit is set when a BRK instruction has been executed and an interrupt has been generated to process it.
 - **Overflow Flag**: The overflow flag is set during arithmetic operations if the result has yielded an invalid 2's complement result (e.g. adding to positive numbers and ending up with a negative result: 64 + 64 => -128). It is determined by looking at the carry between bits 6 and 7 and between bit 7 and the carry flag.
 - **Negative Flag**: The negative flag is set if the result of the last operation had bit 7 set to a one.
-
----
