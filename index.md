@@ -1,5 +1,12 @@
 ---
 title: Introduction
+nav1:
+	url: ./index.md
+	title: Home
+
+nav2:
+	url: ./architecture.md
+	title: Next
 ---
 
 # Introduction
@@ -26,8 +33,3 @@ Originally this was all in one HTML file but it grew too big for any of my edito
 Click on any of the above links or the links at the bottom of each page to move between the sections.
 
 ---
-
-<footer>
-	[Home](./index.md)
-	[Next](./architecture.md)
-</footer>

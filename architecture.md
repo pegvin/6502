@@ -1,5 +1,12 @@
 ---
 title: Architecture
+nav1:
+	url: ./index.md
+	title: Contents
+
+nav2:
+	url: ./registers.html
+	title: Next
 ---
 
 # Basic Architecture
@@ -12,8 +19,3 @@ The only other reserved locations in the memory map are the very last 6 bytes of
 The 6502 does not have any special support of hardware devices so they must be mapped to regions of memory in order to exchange data with the hardware latches.
 
 ---
-
-<footer>
-	[Contents](./index.md)
-	[Next](./registers.html)
-</footer>
