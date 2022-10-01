@@ -27,7 +27,7 @@ Click on any of the above links or the links at the bottom of each page to move 
 
 ---
 
-<footer style="display: table; width: 100%; table-layout: fixed;">
-	<a style="display: table-cell; text-align: center; color: #0F79D0;" href="/6502/">Home</a>
-	<a style="display: table-cell; text-align: center; color: #0F79D0;" href="./architecture.html">Next</a>
+<footer>
+	[Home](./index.md)
+	[Next](./architecture.md)
 </footer>
