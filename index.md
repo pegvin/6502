@@ -1,3 +1,7 @@
+---
+title: Introduction
+---
+
 # Introduction
 My first computer, a BBC Microcomputer Model B, was powered by a 6502 processor and I spent many hours writing and debugging assembly language programs for it (I was the author of CodeKit, co-author of SupaStore and lots of other stuff). I managed to hold on to my BBC until 1989 when my wife insisted that I got rid of it before I bought my first Intel based PC.
 
@@ -8,16 +12,16 @@ The assembler that I started with ([AS65](https://web.archive.org/web/2021072721
 More recently I have written my own Java based 6502 assembler which supports relocatable code and some simple structured programming constructs (e.g. if/then/else).
 
 ## Contents
-Originally this was all in one HTML file but it grew too big for any of my editors to handle without crashing so I had to cut it up into 8 sections.</p>
+Originally this was all in one HTML file but it grew too big for any of my editors to handle without crashing so I had to cut it up into 8 sections.
 
-- [Architecture](./architecture.html) describes the few basic details of the processor.</li>
-- [Registers](./registers.html) goes over each of the internal registers and their use.</li>
-- [Instructions](./instructions.html) gives a summary of whole instruction set.</li>
-- [Addressing](#) describes each of the 6502 memory addressing modes.</li>
-- [Algorithms](#) contains examples of basic 6502 coding.</li>
-- [Reference](#) describes the complete instruction set in detail.</li>
-- [Downloads](#) contains some files useful for 6502 programming.</li>
-- [Links](#) contains some links to other sites worth visiting.</li>
+- [Architecture](./architecture.html) describes the few basic details of the processor.
+- [Registers](./registers.html) goes over each of the internal registers and their use.
+- [Instructions](./instructions.html) gives a summary of whole instruction set.
+- [Addressing](#) describes each of the 6502 memory addressing modes.
+- [Algorithms](#) contains examples of basic 6502 coding.
+- [Reference](#) describes the complete instruction set in detail.
+- [Downloads](#) contains some files useful for 6502 programming.
+- [Links](#) contains some links to other sites worth visiting.
 
 Click on any of the above links or the links at the bottom of each page to move between the sections.
 
@@ -27,4 +31,3 @@ Click on any of the above links or the links at the bottom of each page to move 
 	<a style="display: table-cell; text-align: center; color: #0F79D0;" href="/6502/">Home</a>
 	<a style="display: table-cell; text-align: center; color: #0F79D0;" href="./architecture.html">Next</a>
 </footer>
-
