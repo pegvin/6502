@@ -1,12 +1,12 @@
 ---
 title: Links
 nav1:
-  url: ./index.html
-  title: Contents
+  url: ./downloads.html
+  title: Back (Downloads)
 
 nav2:
-  url: ./downloads.html
-  title: Next (Downloads)
+  url: ./index.html
+  title: Contents
 ---
 
 # Links
