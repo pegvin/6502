@@ -6,7 +6,7 @@ nav1:
 
 nav2:
   url: ./registers.html
-  title: Next
+  title: Next (Registers)
 ---
 
 # Basic Architecture

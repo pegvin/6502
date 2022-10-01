@@ -2,7 +2,7 @@
 title: Instructions
 nav1:
   url: ./registers.html
-  title: Back
+  title: Back (Registers)
 
 nav2:
   url: ./index.html
@@ -10,7 +10,7 @@ nav2:
 
 nav2:
   url: ./addressing.html
-  title: Next
+  title: Next (Addressing Modes)
 ---
 
 # The Instruction Set
