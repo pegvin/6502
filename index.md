@@ -1,11 +1,11 @@
 ---
 title: Introduction
 nav1:
-  url: ./index.md
+  url: ./index.html
   title: Home
 
 nav2:
-  url: ./architecture.md
+  url: ./architecture.html
   title: Next
 ---
 

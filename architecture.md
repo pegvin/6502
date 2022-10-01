@@ -1,7 +1,7 @@
 ---
 title: Architecture
 nav1:
-  url: ./index.md
+  url: ./index.html
   title: Contents
 
 nav2:
