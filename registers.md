@@ -2,15 +2,15 @@
 title: Registers
 nav1:
   url: ./architecture.html
-  title: Back
+  title: Back (Basic Architecture)
 
 nav2:
   url: ./index.html
   title: Contents
 
-nav2:
+nav3:
   url: ./instructions.html
-  title: Next
+  title: Next (The Instruction Set)
 ---
 
 # The Registers
