@@ -1,12 +1,12 @@
 ---
 title: Architecture
 nav1:
-	url: ./index.md
-	title: Contents
+  url: ./index.md
+  title: Contents
 
 nav2:
-	url: ./registers.html
-	title: Next
+  url: ./registers.html
+  title: Next
 ---
 
 # Basic Architecture

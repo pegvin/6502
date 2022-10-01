@@ -1,12 +1,12 @@
 ---
 title: Introduction
 nav1:
-	url: ./index.md
-	title: Home
+  url: ./index.md
+  title: Home
 
 nav2:
-	url: ./architecture.md
-	title: Next
+  url: ./architecture.md
+  title: Next
 ---
 
 # Introduction
@@ -21,7 +21,7 @@ More recently I have written my own Java based 6502 assembler which supports rel
 ## Contents
 Originally this was all in one HTML file but it grew too big for any of my editors to handle without crashing so I had to cut it up into 8 sections.
 
-- [Architecture](./architecture.html) describes the few basic details of the processor.
+- [Architecture](./architecture.md) describes the few basic details of the processor.
 - [Registers](./registers.html) goes over each of the internal registers and their use.
 - [Instructions](./instructions.html) gives a summary of whole instruction set.
 - [Addressing](#) describes each of the 6502 memory addressing modes.
