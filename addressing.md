@@ -115,7 +115,7 @@ Indexed indirect addressing is normally used in conjunction with a table of addr
 ```
 
 ## Indirect Indexed
-Indirect indirect addressing is the most common indirection mode used on the 6502. In instruction contains the zero page location of the least significant byte of 16 bit address. The Y register is dynamically added to this value to generated the actual target address for operation.
+Indirect indexed addressing is the most common indirection mode used on the 6502. In instruction contains the zero page location of the least significant byte of 16 bit address. The Y register is dynamically added to this value to generated the actual target address for operation.
 
 ```armasm
   LDA ($40),Y     ;Load a byte indirectly from memory
