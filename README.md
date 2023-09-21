@@ -1,3 +1,7 @@
+### ⚠️ Moved To https://github.com/pegvin/pegvin.github.io/tree/master/content/6502 ⚠️
+
+---
+
 # 6502
 Clone Of obelisk.me.uk/6502/ | RIP Andrew Jabobs aka Bitwise
 
